@@ -2,6 +2,7 @@ package ua.edu.ChaliyLukyanov.laba3.model;
 
 public class Device implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private int idPrev;
 	private int idComponent;
@@ -13,7 +14,7 @@ public class Device implements java.io.Serializable {
 	
 	public Device(int id, int idPrev, int idComponent, String title) {
 		this.id = id;
-		this.idPrev = idPrev;
+		this.idPrev = Integer.valueOf(idPrev);
 		this.idComponent = idComponent;
 		this.title = title;
 	}
@@ -30,8 +31,8 @@ public class Device implements java.io.Serializable {
 		return idPrev;
 	}
 
-	public void setIdPrev(int id_prev) {
-		this.idPrev = id_prev;
+	public void setIdPrev(int idPrev) {
+		this.idPrev = idPrev;
 	}
 
 	public int getIdComponent() {

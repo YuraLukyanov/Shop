@@ -2,24 +2,30 @@ package ua.edu.ChaliyLukyanov.laba3.model;
 
 public class Component implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private int id;
 	private String title;
 	private String description;
 	private String producer;
 	private double weight;
 	private String img;
-	private double decimal;
+	private double price;
 
 
 	public Component(int id, String title, String description, String producer,
-			double weight, String img, double decimal) {
+			double weight, String img, double price) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.producer = producer;
 		this.weight = weight;
 		this.img = img;
-		this.decimal = decimal;
+		this.price = price;
+	}
+	
+	public Component(){
+		
 	}
 
 	public int getId() {
@@ -87,15 +93,15 @@ public class Component implements java.io.Serializable {
 	/**
 	 * @return the decimal
 	 */
-	public double getDecimal() {
-		return decimal;
+	public double getPrice() {
+		return price;
 	}
 
 	/**
-	 * @param decimal the decimal to set
+	 * @param price the price to set
 	 */
-	public void setDecimal(double decimal) {
-		this.decimal = decimal;
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	@Override

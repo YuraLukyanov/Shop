@@ -7,7 +7,7 @@
 <title>Simple Beauty</title>
 <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
-<%@ page import="ua.edu.ChaliyLukyanov.laba3.model.*,java.util.List"%>
+<%@ page import="ua.edu.ChaliyLukyanov.laba3.model.*, java.util.List"%>
 
 <body>
 
@@ -18,31 +18,37 @@
 		<div id="main_content">
 
 			<div class="content">
-				<h2 align = "center">Devices:</h2>
+				<h2 align = "center">Components:</h2>
 				<%
-					List<Device> list = (List<Device>) request.getAttribute("devices");
+					List<Component> list = (List<Component>) request.getAttribute("components");
 					if (list != null) {
 				%>
 				<table border="1" cellpadding="10" align="center">
-					<tr>
-						<td>ID</td>
-						<td>ID Component</td>
-						<td>ID Parent</td>
-						<td>Title</td>
-					</tr>
-					<%
-						for (Device w : list) {
-					%>
-					<tr>
-						<td><%=w.getId()%></td>
-						<td><%=w.getIdComponent() %></td>
-						<td><%=w.getIdPrev() %></td>
-						<td><%=w.getTitle()%></td>
-					</tr>
-					<%
+					<thead>
+						<tr>
+							<td>Title</td>
+							<td>Description</td>
+							<td>Producer</td>
+							<td>Weight</td>
+							<td>Price</td>
+						</tr>
+					</thead>
+					<tbody>
+						<%
+							for (Component comp : list) {
+						%>
+						<tr>
+							<td><%=comp.getTitle() %></td>
+							<td><%=comp.getDescription() %></td>
+							<td><%=comp.getProducer()%></td>
+							<td><%=comp.getWeight()%></td>
+							<td><%=comp.getPrice()%></td>
+						</tr>
+						<%
+							}
 						}
-					}
-					%>
+						%>
+					</tbody>
 				</table>
 			</div>
 

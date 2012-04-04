@@ -10,16 +10,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ShowDevices extends HttpServlet {
+/**
+ * Servlet implementation class ShowComponentsServlet
+ */
+public class ShowComponentsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		Shop model = (Shop) request.getAttribute(Application.MODEL);
-		List<Device> list = null;
+		ComponentDAO model = (ComponentDAO) request.getAttribute(Application.COMPONENT_DAO);
+		List<Component> list = null;
 		try {
-			list = model.getAllDevices();
-			System.out.println("get ok");
+			list = model.getAllComponents();
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -27,20 +29,10 @@ public class ShowDevices extends HttpServlet {
 		}
 		
 		if (list != null) {
-			request.setAttribute("devices", list);
+			request.setAttribute("components", list);
 			RequestDispatcher dispatcher = request
-					.getRequestDispatcher("/showDevices.jsp");
+					.getRequestDispatcher("/show_components.jsp");
 			dispatcher.forward(request, response);
 		}
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
-
 }
