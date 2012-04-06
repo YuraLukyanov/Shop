@@ -9,16 +9,17 @@
 	<div class="menu">
 		<div class="menu_title">Main menu</div>
 		<ul>
-			<li><a href="<%=request.getContextPath()%>/showdevices"
-				class="menu_link">Show devices</a></li>
-			<li><a href="<%=request.getContextPath()%>/showcomponents"
-				class="menu_link">Show Components</a></li>
 			<li><a href="<%=request.getContextPath()%>/add_component.jsp"
 				class="menu_link">Add component</a></li>
-			<li><a href="<%=request.getContextPath()%>/remove_component.jsp"
-				class="menu_link">Remove component</a></li>
 			<li><a href="<%=request.getContextPath()%>/add_device.jsp"
 				class="menu_link">Add device</a></li>
+			<li><a href="<%=request.getContextPath()%>/showcomponents"
+				class="menu_link">Show Components</a></li>
+			<li><a href="<%=request.getContextPath()%>/showdevices"
+				class="menu_link">Show devices</a></li>
+			<li><a href="<%=request.getContextPath()%>/remove_component.jsp"
+				class="menu_link">Remove component</a></li>
+
 			<li><a href="<%=request.getContextPath()%>/remove_device.jsp"
 				class="menu_link">Remove devices</a></li>
 		</ul>

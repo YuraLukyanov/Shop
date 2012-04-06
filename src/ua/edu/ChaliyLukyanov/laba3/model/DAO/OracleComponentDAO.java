@@ -64,7 +64,7 @@ public class OracleComponentDAO implements ComponentDAO {
 	}
 
 	@Override
-	public Component getComponentByID(int id) throws SQLException {
+	public Component getComponentByID(int id) {
 		Connection conn = null;
 		PreparedStatement st = null;
 		Component component = null;
@@ -106,7 +106,7 @@ public class OracleComponentDAO implements ComponentDAO {
 	}
 
 	@Override
-	public void addComponent(Component component) throws SQLException {
+	public void addComponent(Component component) {
 		Connection conn = null;
 		PreparedStatement st = null;
 
@@ -144,7 +144,7 @@ public class OracleComponentDAO implements ComponentDAO {
 	}
 
 	@Override
-	public void removeComponent(int id) throws SQLException {
+	public void removeComponent(int id) {
 		Connection conn = null;
 		PreparedStatement st = null;
 		try {

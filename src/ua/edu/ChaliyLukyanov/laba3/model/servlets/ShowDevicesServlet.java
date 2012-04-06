@@ -1,7 +1,6 @@
 package ua.edu.ChaliyLukyanov.laba3.model.servlets;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ua.edu.ChaliyLukyanov.laba3.model.Application;
 import ua.edu.ChaliyLukyanov.laba3.model.Device;
+import ua.edu.ChaliyLukyanov.laba3.model.ShopException;
 import ua.edu.ChaliyLukyanov.laba3.model.DAO.DeviceDAO;
 
 public class ShowDevicesServlet extends HttpServlet {
@@ -23,16 +23,13 @@ public class ShowDevicesServlet extends HttpServlet {
 		List<Device> list = null;
 		try {
 			list = model.getAllDevices();
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		if (list != null) {
 			request.setAttribute("devices", list);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/show_devices.jsp");
 			dispatcher.forward(request, response);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (ShopException e) {
+			e.printStackTrace();
 		}
 	}
 }

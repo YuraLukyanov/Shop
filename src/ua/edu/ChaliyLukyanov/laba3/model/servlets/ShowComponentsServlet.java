@@ -1,7 +1,6 @@
 package ua.edu.ChaliyLukyanov.laba3.model.servlets;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,11 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import ua.edu.ChaliyLukyanov.laba3.model.Application;
 import ua.edu.ChaliyLukyanov.laba3.model.Component;
+import ua.edu.ChaliyLukyanov.laba3.model.ShopException;
 import ua.edu.ChaliyLukyanov.laba3.model.DAO.ComponentDAO;
 
-/**
- * Servlet implementation class ShowComponentsServlet
- */
+
 public class ShowComponentsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -26,17 +24,13 @@ public class ShowComponentsServlet extends HttpServlet {
 		List<Component> list = null;
 		try {
 			list = model.getAllComponents();
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		if (list != null) {
 			request.setAttribute("components", list);
 			RequestDispatcher dispatcher = request
 					.getRequestDispatcher("/show_components.jsp");
 			dispatcher.forward(request, response);
+		} catch (ShopException e) {
+			e.printStackTrace();
 		}
+
 	}
 }

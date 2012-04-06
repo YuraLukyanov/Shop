@@ -1,7 +1,6 @@
 package ua.edu.ChaliyLukyanov.laba3.model.servlets;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import ua.edu.ChaliyLukyanov.laba3.model.Application;
 import ua.edu.ChaliyLukyanov.laba3.model.Component;
+import ua.edu.ChaliyLukyanov.laba3.model.ShopException;
+
 import ua.edu.ChaliyLukyanov.laba3.model.DAO.ComponentDAO;
 
 public class AddComponentServlet extends HttpServlet {
@@ -17,12 +18,12 @@ public class AddComponentServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		ComponentDAO model = (ComponentDAO) request.getAttribute(Application.COMPONENT_DAO);
-		
+
+		ComponentDAO model = (ComponentDAO) request
+				.getAttribute(Application.COMPONENT_DAO);
+
 		try {
-			
+
 			String title = request.getParameter("title");
 			String desc = request.getParameter("desc");
 			String producer = request.getParameter("producer");
@@ -30,14 +31,15 @@ public class AddComponentServlet extends HttpServlet {
 
 			double price = Double.parseDouble(request.getParameter("price"));
 			double w = Double.parseDouble(request.getParameter("weight"));
-			
-			model.addComponent(new Component(0, title, desc, producer, w, img,price));
-			
+
+			model.addComponent(new Component(0, title, desc, producer, w, img,
+					price));
+
 			response.sendRedirect(request.getContextPath()
 					+ "/add_component.jsp?ok");
-		} catch (SQLException e) {
+		} catch (ShopException e) {
 			response.sendRedirect(request.getContextPath()
-					+ "/add_component.jsp?error=SQL ERROR");
+					+ "/add_component.jsp?error=" + e.getMessage());
 			e.printStackTrace();
 		} catch (NumberFormatException e) {
 			response.sendRedirect(request.getContextPath()

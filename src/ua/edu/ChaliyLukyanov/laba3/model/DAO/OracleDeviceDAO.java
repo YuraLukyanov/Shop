@@ -23,7 +23,7 @@ public class OracleDeviceDAO implements DeviceDAO {
 	public static final String REMOVE_DEVICE = "delete from device where id_device = ?";
 
 	@Override
-	public List<Device> getAllDevices() throws SQLException {
+	public List<Device> getAllDevices() {
 		Connection conn = null;
 		PreparedStatement st = null;
 		List<Device> devices = new LinkedList<Device>();
@@ -63,12 +63,12 @@ public class OracleDeviceDAO implements DeviceDAO {
 	}
 
 	@Override
-	public Component getDeviceByID(int id) throws SQLException {
+	public Device getDeviceByID(int id) {
 		return null;
 	}
 
 	@Override
-	public void addDevice(Device device) throws SQLException {
+	public void addDevice(Device device) {
 		Connection conn = null;
 		PreparedStatement st = null;
 		try {
@@ -105,7 +105,7 @@ public class OracleDeviceDAO implements DeviceDAO {
 	}
 
 	@Override
-	public void removeDevice(int id) throws SQLException {
+	public void removeDevice(int id) {
 		Connection conn = null;
 		PreparedStatement st = null;
 		try {

@@ -1,18 +1,16 @@
 package ua.edu.ChaliyLukyanov.laba3.model.DAO;
 
-import java.sql.SQLException;
 import java.util.List;
 
-import ua.edu.ChaliyLukyanov.laba3.model.Component;
 import ua.edu.ChaliyLukyanov.laba3.model.Device;
 
 public interface DeviceDAO {
 
-	List<Device> getAllDevices() throws SQLException;
+	List<Device> getAllDevices();
 	
-	Component getDeviceByID(int id) throws SQLException ;
+	Device getDeviceByID(int id);
 	
-	void addDevice(Device device) throws SQLException;
+	void addDevice(Device device);
 	
-	void removeDevice(int id) throws SQLException;
+	void removeDevice(int id);
 }
