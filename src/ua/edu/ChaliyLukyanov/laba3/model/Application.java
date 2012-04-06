@@ -21,5 +21,4 @@ public class Application implements ServletRequestListener {
 		event.getServletRequest().setAttribute(DEVICE_DAO, device);
 		event.getServletRequest().setAttribute(COMPONENT_DAO, component);
 	}
-
 }

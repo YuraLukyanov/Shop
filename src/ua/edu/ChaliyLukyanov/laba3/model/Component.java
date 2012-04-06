@@ -100,7 +100,7 @@ public class Component implements java.io.Serializable {
 
 	/**
 	 * @param price
-	 *            the price to set
+	 * the price to set
 	 */
 	public void setPrice(double price) {
 		this.price = price;
