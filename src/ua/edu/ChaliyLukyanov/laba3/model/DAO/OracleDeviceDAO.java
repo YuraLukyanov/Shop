@@ -42,6 +42,7 @@ public class OracleDeviceDAO implements DeviceDAO {
 			}
 		} finally {
 			st.close();
+			conn.close();
 		}
 		return devices;
 		
@@ -69,6 +70,7 @@ public class OracleDeviceDAO implements DeviceDAO {
 			st.executeUpdate();
 		} finally {
 			st.close();
+			conn.close();
 		}
 	}
 
@@ -81,6 +83,7 @@ public class OracleDeviceDAO implements DeviceDAO {
 			st.executeUpdate();
 		} finally {
 			st.close();
+			conn.close();
 		}
 	}
 

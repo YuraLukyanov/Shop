@@ -41,6 +41,7 @@ public class OracleComponentDAO implements ComponentDAO {
 			}
 		} finally {
 			st.close();
+			conn.close();
 			return res;
 		}
 	}
@@ -61,6 +62,7 @@ public class OracleComponentDAO implements ComponentDAO {
 			}
 		} finally {
 			st.close();
+			conn.close();
 			return component;
 		}
 	}
@@ -79,6 +81,7 @@ public class OracleComponentDAO implements ComponentDAO {
 			st.execute();
 		} finally {
 			st.close();
+			conn.close();
 		}
 	}
 
@@ -90,6 +93,7 @@ public class OracleComponentDAO implements ComponentDAO {
 			st.executeUpdate();
 		} finally {
 			st.close();
+			conn.close();
 		}
 	}
 
