@@ -1,34 +1,34 @@
-package ua.edu.ChaliyLukyanov.laba3.model;
+package ua.edu.ChaliyLukyanov.laba3.model.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+
+import ua.edu.ChaliyLukyanov.laba3.model.Component;
+import ua.edu.ChaliyLukyanov.laba3.model.Device;
 
 public class OracleDeviceDAO implements DeviceDAO {
 
-	public static final String GET_ALL_DEVICES = "select * from device";
+	public static final String GET_ALL_DEVICES = "select level, id_device, id_component, id_prev, title from device start with id_prev is null connect by prior id_device=id_prev";
 	
-	public static final String GET_DEVICE_BY_ID = "select * from device where id_device = ? ";
+	public static final String GET_DEVICE_BY_ID = "select * from device where id_device = ?";
 	
 	public static final String INSERT_DEVICE = "insert into device values(dev_sq.nextval,?,?,?)";
 	
 	public static final String REMOVE_DEVICE = "delete from device where id_device = ?";
 	
-	private Connection conn = null;
-	
-	public OracleDeviceDAO(Connection conn){
-		this.conn = conn;
-	}
 
-	@SuppressWarnings("finally")
 	@Override
 	public List<Device> getAllDevices() throws SQLException {
+		Connection conn = OracleDAOFactory.createConnection();
 		PreparedStatement st = conn.prepareStatement(GET_ALL_DEVICES);
-		List<Device> res = new ArrayList<Device>();
+		List<Device> devices = new LinkedList<Device>();
 		try {
 			ResultSet row =  st.executeQuery();
 			while(row.next()){
@@ -37,23 +37,25 @@ public class OracleDeviceDAO implements DeviceDAO {
 				dev.setIdComponent(row.getInt("id_component"));
 				dev.setIdPrev(row.getInt("id_prev"));
 				dev.setTitle(row.getString("title"));
-				res.add(dev);
+				dev.setLevel(row.getInt("level"));
+				devices.add(dev);
 			}
 		} finally {
 			st.close();
-			return res;
 		}
+		return devices;
 		
 	}
 
 	@Override
 	public Component getDeviceByID(int id) throws SQLException {
-		// TODO Auto-generated method stub
+		Connection conn = OracleDAOFactory.createConnection();
 		return null;
 	}
 
 	@Override
 	public void addDevice(Device device) throws SQLException {
+		Connection conn = OracleDAOFactory.createConnection();
 		PreparedStatement st = conn.prepareStatement(INSERT_DEVICE);
 		try {
 			int id_prev = device.getIdPrev();
@@ -72,8 +74,14 @@ public class OracleDeviceDAO implements DeviceDAO {
 
 	@Override
 	public void removeDevice(int id) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		Connection conn = OracleDAOFactory.createConnection();
+		PreparedStatement st = conn.prepareStatement(REMOVE_DEVICE);
+		try {
+			st.setInt(1, id);
+			st.executeUpdate();
+		} finally {
+			st.close();
+		}
 	}
 
 }

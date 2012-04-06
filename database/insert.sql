@@ -1,34 +1,3 @@
-drop table Device;
-drop table Component;
-drop sequence com_sq;
-drop sequence dev_sq;
-
-create table Component (
-  id_component Integer not null,
-  title varchar(50),
-  description varchar(1000),
-  producer varchar(100),
-  weight decimal,
-  img varchar(100),
-  price decimal
-);
-
-create sequence com_sq start with 10; 
-
-create table Device (
-  id_device Integer not null,
-  id_prev Integer,
-  id_component Integer,
-  title varchar(50)
-);
-
-create sequence dev_sq start with 1000; 
-
-ALTER TABLE Component ADD PRIMARY KEY (id_component);
-ALTER TABLE Device ADD PRIMARY KEY (id_device);
-ALTER TABLE Device ADD FOREIGN KEY (id_component) REFERENCES Component (id_component) on delete Cascade;
-ALTER TABLE Device ADD CONSTRAINT fk_Self FOREIGN KEY (id_prev) REFERENCES Device (id_device) ON DELETE CASCADE;
-
 insert into component values(com_sq.nextval, 'Western Digital Elements Desktop 2TB', 'Designed with the same commitment to quality that made WD external drives the number one selling drives in the world.', 'Western Digital', null, null, 149.00);
 insert into component values(com_sq.nextval, 'Intel Core i5-2320', 'Intel’s most popular family member adapts and looks better than ever. The 2nd generation Intel Core i5 processor delivers even more performance automatically when you need it and now a better visual PC experience built-in. With Intel Turbo Boost Technology 2.0, the 2nd generation Intel Core i5 processor increases your PC’s speed automatically for your demanding applications. It also includes built-in graphics and a rich set of new features for a stunning and seamless visual PC experience with no additional hardware required. That’s visibly smart performance with a boost.', 'Intel', null, null, 183.00);
 insert into component values(com_sq.nextval, 'Dell OptiPlex 990 SFF', 'Dell OptiPlex 990 provides superior security, management capabilities and services for your organization.', 'Dell', null, null, 971.50);
@@ -40,5 +9,3 @@ insert into device values(dev_sq.nextval, 1000, 11, 'Processor');
 insert into device values(dev_sq.nextval, null, 13, 'Monitor');
 
 commit;
-
-select level, title from device start with id_prev is null connect by prior id_device=id_prev;

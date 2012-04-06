@@ -19,6 +19,8 @@
 				class="menu_link">Remove component</a></li>
 			<li><a href="<%=request.getContextPath()%>/add_device.jsp"
 				class="menu_link">Add device</a></li>
+			<li><a href="<%=request.getContextPath()%>/remove_device.jsp"
+				class="menu_link">Remove devices</a></li>
 		</ul>
 	</div>
 </body>

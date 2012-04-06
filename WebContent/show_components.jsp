@@ -7,7 +7,7 @@
 <title>Simple Beauty</title>
 <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
-<%@ page import="ua.edu.ChaliyLukyanov.laba3.model.*, java.util.List"%>
+<%@ page import="ua.edu.ChaliyLukyanov.laba3.model.*,java.util.List"%>
 
 <body>
 

@@ -1,4 +1,4 @@
-package ua.edu.ChaliyLukyanov.laba3.model;
+package ua.edu.ChaliyLukyanov.laba3.model.servlets;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -7,6 +7,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import ua.edu.ChaliyLukyanov.laba3.model.Application;
+import ua.edu.ChaliyLukyanov.laba3.model.Component;
+import ua.edu.ChaliyLukyanov.laba3.model.DAO.ComponentDAO;
 
 public class AddComponentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

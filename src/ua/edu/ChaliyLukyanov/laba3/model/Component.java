@@ -3,7 +3,7 @@ package ua.edu.ChaliyLukyanov.laba3.model;
 public class Component implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private int id;
 	private String title;
 	private String description;
@@ -11,7 +11,6 @@ public class Component implements java.io.Serializable {
 	private double weight;
 	private String img;
 	private double price;
-
 
 	public Component(int id, String title, String description, String producer,
 			double weight, String img, double price) {
@@ -23,9 +22,9 @@ public class Component implements java.io.Serializable {
 		this.img = img;
 		this.price = price;
 	}
-	
-	public Component(){
-		
+
+	public Component() {
+
 	}
 
 	public int getId() {
@@ -70,7 +69,8 @@ public class Component implements java.io.Serializable {
 	}
 
 	/**
-	 * @param weight the weight to set
+	 * @param weight
+	 *            the weight to set
 	 */
 	public void setWeight(double weight) {
 		this.weight = weight;
@@ -84,7 +84,8 @@ public class Component implements java.io.Serializable {
 	}
 
 	/**
-	 * @param img the img to set
+	 * @param img
+	 *            the img to set
 	 */
 	public void setImg(String img) {
 		this.img = img;
@@ -98,7 +99,8 @@ public class Component implements java.io.Serializable {
 	}
 
 	/**
-	 * @param price the price to set
+	 * @param price
+	 *            the price to set
 	 */
 	public void setPrice(double price) {
 		this.price = price;

@@ -1,7 +1,10 @@
-package ua.edu.ChaliyLukyanov.laba3.model;
+package ua.edu.ChaliyLukyanov.laba3.model.DAO;
 
 import java.sql.SQLException;
 import java.util.List;
+
+import ua.edu.ChaliyLukyanov.laba3.model.Component;
+import ua.edu.ChaliyLukyanov.laba3.model.Device;
 
 public interface DeviceDAO {
 

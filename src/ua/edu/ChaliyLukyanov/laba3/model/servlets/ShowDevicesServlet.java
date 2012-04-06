@@ -1,4 +1,4 @@
-package ua.edu.ChaliyLukyanov.laba3.model;
+package ua.edu.ChaliyLukyanov.laba3.model.servlets;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -10,18 +10,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class ShowComponentsServlet
- */
-public class ShowComponentsServlet extends HttpServlet {
+import ua.edu.ChaliyLukyanov.laba3.model.Application;
+import ua.edu.ChaliyLukyanov.laba3.model.Device;
+import ua.edu.ChaliyLukyanov.laba3.model.DAO.DeviceDAO;
+
+public class ShowDevicesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		ComponentDAO model = (ComponentDAO) request.getAttribute(Application.COMPONENT_DAO);
-		List<Component> list = null;
+		DeviceDAO model = (DeviceDAO) request.getAttribute(Application.DEVICE_DAO);
+		List<Device> list = null;
 		try {
-			list = model.getAllComponents();
+			list = model.getAllDevices();
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -29,9 +30,8 @@ public class ShowComponentsServlet extends HttpServlet {
 		}
 		
 		if (list != null) {
-			request.setAttribute("components", list);
-			RequestDispatcher dispatcher = request
-					.getRequestDispatcher("/show_components.jsp");
+			request.setAttribute("devices", list);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/show_devices.jsp");
 			dispatcher.forward(request, response);
 		}
 	}

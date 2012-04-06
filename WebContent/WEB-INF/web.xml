@@ -21,7 +21,7 @@
     <description></description>
     <display-name>ShowDevicesServlet</display-name>
     <servlet-name>ShowDevicesServlet</servlet-name>
-    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.ShowDevicesServlet</servlet-class>
+    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.servlets.ShowDevicesServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ShowDevicesServlet</servlet-name>
@@ -29,19 +29,9 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>TestServlet</display-name>
-    <servlet-name>TestServlet</servlet-name>
-    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.TestServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>TestServlet</servlet-name>
-    <url-pattern>/test</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
     <display-name>AddComponentServlet</display-name>
     <servlet-name>AddComponentServlet</servlet-name>
-    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.AddComponentServlet</servlet-class>
+    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.servlets.AddComponentServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AddComponentServlet</servlet-name>
@@ -51,7 +41,7 @@
     <description></description>
     <display-name>ShowComponentsServlet</display-name>
     <servlet-name>ShowComponentsServlet</servlet-name>
-    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.ShowComponentsServlet</servlet-class>
+    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.servlets.ShowComponentsServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ShowComponentsServlet</servlet-name>
@@ -61,7 +51,7 @@
     <description></description>
     <display-name>ShowComponentServlet</display-name>
     <servlet-name>ShowComponentServlet</servlet-name>
-    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.ShowComponentServlet</servlet-class>
+    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.servlets.ShowComponentServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ShowComponentServlet</servlet-name>
@@ -71,7 +61,7 @@
     <description></description>
     <display-name>RemoveComponentServlet</display-name>
     <servlet-name>RemoveComponentServlet</servlet-name>
-    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.RemoveComponentServlet</servlet-class>
+    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.servlets.RemoveComponentServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>RemoveComponentServlet</servlet-name>
@@ -81,10 +71,20 @@
     <description></description>
     <display-name>AddDeviceServlet</display-name>
     <servlet-name>AddDeviceServlet</servlet-name>
-    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.AddDeviceServlet</servlet-class>
+    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.servlets.AddDeviceServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AddDeviceServlet</servlet-name>
     <url-pattern>/adddevice</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>RemoveDeviceServlet</display-name>
+    <servlet-name>RemoveDeviceServlet</servlet-name>
+    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.servlets.RemoveDeviceServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RemoveDeviceServlet</servlet-name>
+    <url-pattern>/removedevices</url-pattern>
   </servlet-mapping>
 </web-app>

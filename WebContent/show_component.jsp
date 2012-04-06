@@ -8,7 +8,7 @@
 <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<%@ page import="ua.edu.ChaliyLukyanov.laba3.model.*"%>
+<%@ page import="ua.edu.ChaliyLukyanov.laba3.model.*" %>
 	<div id="container">
 
 		<%@ include file="header.jsp"%>

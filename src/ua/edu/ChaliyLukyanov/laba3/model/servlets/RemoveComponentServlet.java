@@ -1,25 +1,27 @@
-package ua.edu.ChaliyLukyanov.laba3.model;
+package ua.edu.ChaliyLukyanov.laba3.model.servlets;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ua.edu.ChaliyLukyanov.laba3.model.Application;
+import ua.edu.ChaliyLukyanov.laba3.model.DAO.ComponentDAO;
 
 /**
- * Servlet implementation class ShowComponentServlet
+ * Servlet implementation class RemoveComponentServlet
  */
-public class ShowComponentServlet extends HttpServlet {
+public class RemoveComponentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
     /**
-     * Default constructor. 
+     * @see HttpServlet#HttpServlet()
      */
-    public ShowComponentServlet() {
+    public RemoveComponentServlet() {
+        super();
         // TODO Auto-generated constructor stub
     }
 
@@ -27,22 +29,20 @@ public class ShowComponentServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ComponentDAO model = (ComponentDAO) request.getAttribute(Application.COMPONENT_DAO);
-		try {
-			Component component = model.getComponentByID(Integer.parseInt(request.getParameter("id")));
-			request.setAttribute("component", component);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/show_component.jsp");
-			dispatcher.forward(request, response);
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		ComponentDAO model = (ComponentDAO) request.getAttribute(Application.COMPONENT_DAO);
+		try {
+			model.removeComponent(Integer.parseInt(request.getParameter("id_component")));
+			response.sendRedirect(request.getContextPath() + "/remove_component.jsp?ok");
+		} catch (SQLException e) {
+			response.sendRedirect(request.getContextPath()+ "/remove_component.jsp?error=SQL ERROR");
+		}
 	}
 
 }

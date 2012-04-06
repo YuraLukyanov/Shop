@@ -7,6 +7,7 @@ public class Device implements java.io.Serializable {
 	private int idPrev;
 	private int idComponent;
 	private String title;
+	private int level;
 
 	public Device() {
 	
@@ -73,5 +74,13 @@ public class Device implements java.io.Serializable {
 		Device other = (Device) obj;
 		return id == other.id && idComponent == other.idComponent
 				&& idPrev == other.idPrev && title.equals(other.title);
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 }
