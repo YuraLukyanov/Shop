@@ -7,18 +7,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ua.edu.ChaliyLukyanov.laba3.model.ShopException;
 import ua.edu.ChaliyLukyanov.laba3.model.Component;
+import ua.edu.ChaliyLukyanov.laba3.model.ShopException;
 
 public class OracleComponentDAO implements ComponentDAO {
 
 	public static final String GET_ALL_COMPONENTS = "select * from component";
+	
+	public static final String GET_DISTINCT_PRODUCERS = "select distinct producer from component";
 
 	public static final String GET_COMPONENT_BY_ID = "select * from component where id_component = ?";
 
 	public static final String INSERT_COMPONENT = "insert into component values(com_sq.nextval,?,?,?,?,?,?)";
 
 	public static final String REMOVE_COMPONENT = "delete from component where id_component = ?";
+	
+	public static final String UPDATE_COMPONENT = "update component set title = ?, description = ?, producer = ?, price = ? where id_component = ?";
 
 	@Override
 	public List<Component> getAllComponents() {
@@ -173,5 +177,71 @@ public class OracleComponentDAO implements ComponentDAO {
 
 		}
 	}
+	
+	public List<String> getDistinctProducers(){
+		Connection conn = null;
+		PreparedStatement st = null;
+		List<String> producers = new ArrayList<String>();
+		try {
+			conn = OracleDAOFactory.createConnection();
+			st = conn.prepareStatement(GET_DISTINCT_PRODUCERS);
+			ResultSet row = st.executeQuery();
+			while(row.next()){
+				producers.add(row.getString("producer"));
+			}
+			return producers;
+		} catch (SQLException e) {
+			throw new ShopException("Can't get producers from database", e);
+		} finally {
+			try {
+				if (st != null) {
+					st.close();
+				}
+			} catch (SQLException e) {
+				throw new ShopException("Can't close statement", e);
+			}
 
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				throw new ShopException("Can't close connection", e);
+			}
+
+		}
+	}
+	
+	public void updateComponent(Component component) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		try {
+			conn = OracleDAOFactory.createConnection();
+			st = conn.prepareStatement(UPDATE_COMPONENT);
+			st.setString(1, component.getTitle());
+			st.setString(2, component.getDescription());
+			st.setString(3, component.getProducer());
+			st.setDouble(4, component.getPrice());
+			st.setInt(5, component.getId());
+			st.executeUpdate();
+		} catch (SQLException e) {
+			throw new ShopException("Can't get producers from database", e);
+		} finally {
+			try {
+				if (st != null) {
+					st.close();
+				}
+			} catch (SQLException e) {
+				throw new ShopException("Can't close statement", e);
+			}
+
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				throw new ShopException("Can't close connection", e);
+			}
+		}
+	}
 }

@@ -7,6 +7,7 @@
   <property name="dist.home"     value="${basedir}/dist"/>
   <property name="src.home"      value="${basedir}/src"/>
   <property name="web.home"      value="${basedir}/WebContent"/>
+  
 
   <target name="help">
     <echo>You can use the following targets:</echo>
@@ -71,6 +72,9 @@
   
    <target name="deploy" depends="compile">
     <copy file="${dist.home}/${app.name}.war" todir="${tcserver.home}/webapps"/>
+	<copy  todir="${tcserver.home}/lib">
+      <fileset dir="${work.home}/WEB-INF/lib"/>
+    </copy>
 	<delete dir="${work.home}"/>
     <delete dir="${dist.home}"/>
   </target>

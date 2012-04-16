@@ -16,6 +16,7 @@ import ua.edu.ChaliyLukyanov.laba3.model.DAO.DeviceDAO;
 public class AddDeviceServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DeviceDAO model = (DeviceDAO) request.getAttribute(Application.DEVICE_DAO);
 		try {
@@ -23,12 +24,11 @@ public class AddDeviceServlet extends HttpServlet {
 										Integer.parseInt(request.getParameter("id_component")),
 										request.getParameter("title")));
 			response.sendRedirect(request.getContextPath() + "/add_device.jsp?ok");
+			
 		} catch (ShopException e) {
-			response.sendRedirect(request.getContextPath()
-					+ "/add_device.jsp?error=" + e.getMessage());
+			Application.sendErrorRedirect(request,response,"/servlet_error.jsp",e.getMessage());
 		} catch (NumberFormatException e) {
-			response.sendRedirect(request.getContextPath()
-					+ "/add_device.jsp?error=NumberFormat");
+			Application.sendErrorRedirect(request,response,"/servlet_error.jsp",e.getMessage());
 		}
 	}
 

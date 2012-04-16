@@ -1,5 +1,7 @@
 package ua.edu.ChaliyLukyanov.laba3.model;
 
+import java.util.Comparator;
+
 public class Component implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -85,7 +87,7 @@ public class Component implements java.io.Serializable {
 
 	/**
 	 * @param img
-	 *            the img to set
+	 * the img to set
 	 */
 	public void setImg(String img) {
 		this.img = img;
@@ -137,4 +139,42 @@ public class Component implements java.io.Serializable {
 				&& producer.equals(other.producer)
 				&& description.equals(other.description);
 	}
+	
+	public static class PriceComparator implements Comparator<Component>{
+
+		@Override
+		public int compare(Component o1, Component o2) {
+			double id1 = o1.getPrice();
+			double id2 = o2.getPrice();
+			if (id1 > id2)
+				return 1;
+			else if (id1 < id2)
+				return -1;
+			else
+				return 0;
+		}
+	}
+	
+	public static class ProducerComparator implements Comparator<Component>{
+		
+		@Override
+		public int compare(Component o1, Component o2) {
+			String pr1 = o1.getProducer();
+			String pr2 = o2.getProducer();
+			return pr1.compareTo(pr2);
+		}
+	}
+	
+	public static class TitleComparator implements Comparator<Component>{
+
+		@Override
+		public int compare(Component o1, Component o2) {
+			String pr1 = o1.getTitle();
+			String pr2 = o2.getTitle();
+			return pr1.compareTo(pr2);
+		}
+	}
 }
+
+
+

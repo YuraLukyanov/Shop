@@ -87,4 +87,34 @@
     <servlet-name>RemoveDeviceServlet</servlet-name>
     <url-pattern>/removedevices</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ShowNextLevelDevicesServlet</display-name>
+    <servlet-name>ShowNextLevelDevicesServlet</servlet-name>
+    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.servlets.ShowNextLevelDevicesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShowNextLevelDevicesServlet</servlet-name>
+    <url-pattern>/shownextleveldevices</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>FilterComponentsServlet</display-name>
+    <servlet-name>FilterComponentsServlet</servlet-name>
+    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.servlets.FilterComponentsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FilterComponentsServlet</servlet-name>
+    <url-pattern>/filtercomponent</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EditComponentServlet</display-name>
+    <servlet-name>EditComponentServlet</servlet-name>
+    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.servlets.EditComponentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditComponentServlet</servlet-name>
+    <url-pattern>/editcomponent</url-pattern>
+  </servlet-mapping>
 </web-app>

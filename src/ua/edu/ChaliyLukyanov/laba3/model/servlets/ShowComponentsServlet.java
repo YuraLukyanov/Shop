@@ -17,20 +17,21 @@ import ua.edu.ChaliyLukyanov.laba3.model.DAO.ComponentDAO;
 
 public class ShowComponentsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+   
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		ComponentDAO model = (ComponentDAO) request.getAttribute(Application.COMPONENT_DAO);
-		List<Component> list = null;
 		try {
-			list = model.getAllComponents();
-			request.setAttribute("components", list);
-			RequestDispatcher dispatcher = request
-					.getRequestDispatcher("/show_components.jsp");
+			List<Component> components = model.getAllComponents();
+			List<String> producers = model.getDistinctProducers();
+			request.setAttribute("components", components);
+			request.setAttribute("producers", producers);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/show_components.jsp");
 			dispatcher.forward(request, response);
 		} catch (ShopException e) {
-			e.printStackTrace();
+			Application.sendErrorRedirect(request,response,"/servlet_error.jsp",e.getMessage());
+		} catch (NumberFormatException e) {
+			Application.sendErrorRedirect(request,response,"/servlet_error.jsp",e.getMessage());
 		}
-
 	}
 }

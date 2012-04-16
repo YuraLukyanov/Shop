@@ -13,4 +13,8 @@ public interface ComponentDAO {
 	void addComponent(Component component);
 	
 	void removeComponent(int id);
+	
+	List<String> getDistinctProducers();
+	
+	void updateComponent(Component component);
 }

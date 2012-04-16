@@ -44,53 +44,9 @@
 						</tbody>
 					</table>
 				</c:if>
-				<form action="filtercomponent" method="get">
-					<table>
-						<tr>
-							<td><h4>Sort</h4></td>
-							<td><h4>Producer</h4></td>
-							<td><h4>Price</h4></td>
-						</tr>
-						<tr>
-							<td>
-								<select name="sortBy">
-									<option value="none"></option>
-									<option value="title">by title</option>
-									<option value="producer">by producer</option>
-									<option value="price">by price</option>
-								</select>
-							</td>
-							<td>
-								<select name="producer">
-										<option value="none" title="producer"></option>
-										<c:forEach items="${producers}" var="producer">
-											<option value="${producer}" title="producer">${producer}</option>
-										</c:forEach>
-								</select>
-							</td>
-							<td>
-								<select name="priceOrder">
-										<option value="none" title="price"></option>
-										<option value=">=">&gt=</option>
-										<option value="<=">&lt=</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<select name="sortOrder">
-									<option value="asc">Asc</option>
-									<option value="desc">Desc</option>
-								</select>
-							</td>
-							<td></td>
-							<td><input type="text" name="priceValue" maxlength="10" size="4"></td>
-						</tr>
-					</table>
-					<p align="center"><button type="submit">Filter!</button></p>
-				</form>
+				<br/><br/>
+				<h2 align = "center"><a href="<%=request.getContextPath()%>/showcomponents"	class="menu_link">Back</a></h2>
 			</div>
-
 			<%@ include file="menu.jsp"%>
 
 			<div id="clear"></div>

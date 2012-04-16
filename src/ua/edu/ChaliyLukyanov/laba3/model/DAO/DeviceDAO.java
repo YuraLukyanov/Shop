@@ -13,4 +13,6 @@ public interface DeviceDAO {
 	void addDevice(Device device);
 	
 	void removeDevice(int id);
+	
+	List<Device> getLevelDevicesByID(int id, String sql);
 }

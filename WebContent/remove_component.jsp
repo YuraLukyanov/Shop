@@ -8,6 +8,7 @@
 <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <%@ page import="ua.edu.ChaliyLukyanov.laba3.model.*,ua.edu.ChaliyLukyanov.laba3.model.DAO.*,java.util.List"%>
+<%@ page errorPage="error.jsp" %>
 <body>
 	<div id="container">
 		<%@ include file="header.jsp"%>
@@ -20,7 +21,6 @@
 						<%
 						ComponentDAO model = (ComponentDAO) request.getAttribute(Application.COMPONENT_DAO);
 						List<Component> list = model.getAllComponents();
-				
 						if (list != null) {
 							for (Component comp : list) {
 						%>

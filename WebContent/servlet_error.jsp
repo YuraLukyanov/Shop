@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Simple Beauty</title>
+<title>Error!</title>
 <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -12,9 +12,7 @@
 		<%@ include file="header.jsp"%>
 		<div id="main_content">
 			<div class="content">
-				<h4>This is my test web site. I used simple Oracle database and
-					some simple web pages.</h4>
-				<h4>Use menu and look what I have done.</h4>
+				<h2>Ooops, error! <%= request.getAttribute("exception").toString() %></h2>
 			</div>
 
 			<%@ include file="menu.jsp"%>
