@@ -14,5 +14,11 @@ public interface DeviceDAO {
 	
 	void removeDevice(int id);
 	
-	List<Device> getLevelDevicesByID(int id, String sql);
+	List<Device> getPrevLevelsDeviceByID(int id);
+	
+	List<Device> getNextLevelsDeviceByID(int id);
+	
+	List<Device> getFirstLevelsDeviceByID(int id);
+	
+	int getIdLastDevice();
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,22 +18,15 @@
 		<div id="main_content">
 
 			<div class="content">
-				<%
-					int id = Integer.parseInt(request.getParameter("id"));
-					ComponentDAO compomentDAO = (ComponentDAO)request.getAttribute(Application.COMPONENT_DAO);
-					Component component = compomentDAO.getComponentByID(id);
-					if (component != null) {
-				%>
+				<c:if test="${!empty component}">
 				<ul>
-					<li><b>Title: </b><%=component.getTitle() %></li>
-					<li><b>Description: </b><%=component.getDescription() %></li>
-					<li><b>Producer: </b><%=component.getProducer() %></li>
-					<li><b>Price: </b><%=component.getPrice() %></li>
+					<li><b>Title: </b>${component.title}</li>
+					<li><b>Description: </b>${component.description}</li>
+					<li><b>Producer: </b>${component.producer}</li>
+					<li><b>Price: </b>${component.price}</li>
 				</ul>
-				<% 
-					}
-				%>
-				<a href="<%=request.getContextPath()%>/edit_component.jsp?id=<%=component.getId() %>">edit</a>
+				<a href="${pageContext.request.contextPath}/editcomponent?id=${component.id}">edit</a>
+				</c:if>
 			</div>
 
 			<%@ include file="menu.jsp"%>

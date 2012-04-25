@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Simple Beauty</title>
+<title>Edit component</title>
 <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <%@ page import="ua.edu.ChaliyLukyanov.laba3.model.*,ua.edu.ChaliyLukyanov.laba3.model.DAO.*,java.util.List"%>
@@ -22,24 +22,18 @@
 			<div class="content">
 
 				<h2 align="center">Component:</h2>
-				<%
-					int id = Integer.parseInt(request.getParameter("id"));
-					ComponentDAO compomentDAO = (ComponentDAO)request.getAttribute(Application.COMPONENT_DAO);
-					Component component = compomentDAO.getComponentByID(id);
-					if (component != null) {
-				%>
+				<c:if test="${!empty component}">
+				
 					<form method="post" action="editcomponent">
 						<ul>
-							<li><b>Title: </b><br/><textarea cols="50" rows="2" name="title"> <%=component.getTitle() %></textarea></li>
-							<li><b>Description: </b><br/><textarea cols="50" rows="5" name="description"><%=component.getDescription() %></textarea></li>
-							<li><b>Producer: </b><br/><textarea cols="50" rows="2" name="producer"><%=component.getProducer() %></textarea></li>
-							<li><b>Price: </b><br/><textarea cols="50" rows="1" name="price"><%=component.getPrice() %></textarea></li>
+							<li><b>Title: </b><br/><textarea cols="50" rows="2" name="title"> ${component.title}</textarea></li>
+							<li><b>Description: </b><br/><textarea cols="50" rows="5" name="description">${component.description}</textarea></li>
+							<li><b>Producer: </b><br/><textarea cols="50" rows="2" name="producer">${component.producer}</textarea></li>
+							<li><b>Price: </b><br/><textarea cols="50" rows="1" name="price">${component.price}</textarea></li>
 						</ul>
-						<p align="center"><button type="submit" value="<%=component.getId() %>" name="id_component">save</button></p>
+						<p align="center"><button type="submit" value="${component.id}" name="id_component">save</button></p>
 					</form>
-				<% 
-					} 
-				%>
+				</c:if>
 			</div>
 
 			<%@ include file="menu.jsp"%>

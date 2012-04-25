@@ -20,20 +20,13 @@
 			<div class="content">
 				<h2 align = "center">Devices:</h2>
 				<form method="post" name="remove_devices" action="removedevices">
-				<%
-					DeviceDAO devices = (DeviceDAO) request.getAttribute(Application.DEVICE_DAO);
-					List<Device> list = devices.getAllDevices();
-					if (list != null) {
-					for (Device dev : list) {
-						%>
-						<p style="padding-left:<%=30 * dev.getLevel() %>px;">
-						<input type="checkbox" name="<%=dev.getId() %>" value="<%=dev.getId() %>"/> <%=dev.getTitle() %><br/>
+				<c:if test="${!empty shop_devices }">
+					<c:forEach items="${shop_devices.allDevices}" var="dev">
+						<p style="padding-left:${30 * dev.level}px;">
+						<input type="checkbox" name="${dev.id}" value="${dev.id}"/> ${dev.title}<br/>
 						</p>
-						
-						<%
-					}
-				} 
-				%>
+					</c:forEach>
+				</c:if>
 				<p align="center"><button type="submit">Remove</button></p>
 				</form>
 			</div>

@@ -7,10 +7,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ua.edu.ChaliyLukyanov.laba3.model.Component;
 import ua.edu.ChaliyLukyanov.laba3.model.ShopException;
+import ua.edu.ChaliyLukyanov.laba3.model.Component;
 
 public class OracleComponentDAO implements ComponentDAO {
+
+	private static final String CANT_CLOSE_CONNECTION = "Can't close connection";
+
+	private static final String CANT_CLOSE_STATEMENT = "Can't close statement";
+
+	public static final String PRICE = "price";
+
+	public static final String IMG = "img";
+
+	public static final String WEIGHT = "weight";
+
+	public static final String PRODUCER = "producer";
+
+	public static final String DESCRIPTION = "description";
+
+	public static final String TITLE = "title";
+
+	public static final String ID_COMPONENT = "id_component";
 
 	public static final String GET_ALL_COMPONENTS = "select * from component";
 	
@@ -24,6 +42,44 @@ public class OracleComponentDAO implements ComponentDAO {
 	
 	public static final String UPDATE_COMPONENT = "update component set title = ?, description = ?, producer = ?, price = ? where id_component = ?";
 
+	public static final String GET_ID_LAST_COMPONENT = "select com_sq.currval from dual";
+	
+
+	@Override
+	public int getIdLastComponent() {
+		Connection conn = null;
+		PreparedStatement st = null;
+		int id = 0;
+		try {
+			conn = OracleDAOFactory.createConnection();
+			st = conn.prepareStatement(GET_ID_LAST_COMPONENT);
+			ResultSet row = st.executeQuery();
+			if (row.next()) {
+				id = row.getInt(1);
+			}
+			return id;
+		} catch (SQLException e) {
+			throw new ShopException("Can't get components from database", e);
+		} finally {
+			try {
+				if (st != null) {
+					st.close();
+				}
+			} catch (SQLException e) {
+				throw new ShopException(CANT_CLOSE_STATEMENT, e);
+			}
+
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				throw new ShopException(CANT_CLOSE_CONNECTION, e);
+			}
+
+		}
+	}
+	
 	@Override
 	public List<Component> getAllComponents() {
 		Connection conn = null;
@@ -35,13 +91,13 @@ public class OracleComponentDAO implements ComponentDAO {
 			ResultSet row = st.executeQuery();
 			while (row.next()) {
 				Component comp = new Component();
-				comp.setId(row.getInt("id_component"));
-				comp.setTitle(row.getString("title"));
-				comp.setDescription(row.getString("description"));
-				comp.setProducer(row.getString("producer"));
-				comp.setWeight(row.getDouble("weight"));
-				comp.setImg(row.getString("img"));
-				comp.setPrice(row.getDouble("price"));
+				comp.setId(row.getInt(ID_COMPONENT));
+				comp.setTitle(row.getString(TITLE));
+				comp.setDescription(row.getString(DESCRIPTION));
+				comp.setProducer(row.getString(PRODUCER));
+				comp.setWeight(row.getDouble(WEIGHT));
+				comp.setImg(row.getString(IMG));
+				comp.setPrice(row.getDouble(PRICE));
 				res.add(comp);
 			}
 			return res;
@@ -53,7 +109,7 @@ public class OracleComponentDAO implements ComponentDAO {
 					st.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close statement", e);
+				throw new ShopException(CANT_CLOSE_STATEMENT, e);
 			}
 
 			try {
@@ -61,7 +117,7 @@ public class OracleComponentDAO implements ComponentDAO {
 					conn.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close connection", e);
+				throw new ShopException(CANT_CLOSE_CONNECTION, e);
 			}
 
 		}
@@ -79,10 +135,10 @@ public class OracleComponentDAO implements ComponentDAO {
 			st.setInt(1,id);
 			ResultSet row = st.executeQuery();
 			if (row.next()) {
-				component = new Component(id, row.getString("title"),
-						row.getString("description"),
-						row.getString("producer"), row.getDouble("weight"),
-						row.getString("img"), row.getDouble("price"));
+				component = new Component(id, row.getString(TITLE),
+						row.getString(DESCRIPTION),
+						row.getString(PRODUCER), row.getDouble(WEIGHT),
+						row.getString(IMG), row.getDouble(PRICE));
 
 			}
 			return component;
@@ -95,7 +151,7 @@ public class OracleComponentDAO implements ComponentDAO {
 					st.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close statement", e);
+				throw new ShopException(CANT_CLOSE_STATEMENT, e);
 			}
 
 			try {
@@ -103,7 +159,7 @@ public class OracleComponentDAO implements ComponentDAO {
 					conn.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close connection", e);
+				throw new ShopException(CANT_CLOSE_CONNECTION, e);
 			}
 
 		}
@@ -133,7 +189,7 @@ public class OracleComponentDAO implements ComponentDAO {
 					st.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close statement", e);
+				throw new ShopException(CANT_CLOSE_STATEMENT, e);
 			}
 
 			try {
@@ -141,7 +197,7 @@ public class OracleComponentDAO implements ComponentDAO {
 					conn.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close connection", e);
+				throw new ShopException(CANT_CLOSE_CONNECTION, e);
 			}
 
 		}
@@ -164,7 +220,7 @@ public class OracleComponentDAO implements ComponentDAO {
 					st.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close statement", e);
+				throw new ShopException(CANT_CLOSE_STATEMENT, e);
 			}
 
 			try {
@@ -172,7 +228,7 @@ public class OracleComponentDAO implements ComponentDAO {
 					conn.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close connection", e);
+				throw new ShopException(CANT_CLOSE_CONNECTION, e);
 			}
 
 		}
@@ -187,7 +243,7 @@ public class OracleComponentDAO implements ComponentDAO {
 			st = conn.prepareStatement(GET_DISTINCT_PRODUCERS);
 			ResultSet row = st.executeQuery();
 			while(row.next()){
-				producers.add(row.getString("producer"));
+				producers.add(row.getString(PRODUCER));
 			}
 			return producers;
 		} catch (SQLException e) {
@@ -198,7 +254,7 @@ public class OracleComponentDAO implements ComponentDAO {
 					st.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close statement", e);
+				throw new ShopException(CANT_CLOSE_STATEMENT, e);
 			}
 
 			try {
@@ -206,7 +262,7 @@ public class OracleComponentDAO implements ComponentDAO {
 					conn.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close connection", e);
+				throw new ShopException(CANT_CLOSE_CONNECTION, e);
 			}
 
 		}
@@ -232,7 +288,7 @@ public class OracleComponentDAO implements ComponentDAO {
 					st.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close statement", e);
+				throw new ShopException(CANT_CLOSE_STATEMENT, e);
 			}
 
 			try {
@@ -240,7 +296,7 @@ public class OracleComponentDAO implements ComponentDAO {
 					conn.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close connection", e);
+				throw new ShopException(CANT_CLOSE_CONNECTION, e);
 			}
 		}
 	}

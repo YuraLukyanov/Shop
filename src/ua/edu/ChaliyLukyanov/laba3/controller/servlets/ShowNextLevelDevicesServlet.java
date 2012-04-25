@@ -1,7 +1,6 @@
-package ua.edu.ChaliyLukyanov.laba3.model.servlets;
+package ua.edu.ChaliyLukyanov.laba3.controller.servlets;
 
 import java.io.IOException;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,7 +16,6 @@ import ua.edu.ChaliyLukyanov.laba3.model.Device;
 import ua.edu.ChaliyLukyanov.laba3.model.ShopException;
 import ua.edu.ChaliyLukyanov.laba3.model.DAO.ComponentDAO;
 import ua.edu.ChaliyLukyanov.laba3.model.DAO.DeviceDAO;
-import ua.edu.ChaliyLukyanov.laba3.model.DAO.OracleDeviceDAO;
 
 public class ShowNextLevelDevicesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -29,29 +27,29 @@ public class ShowNextLevelDevicesServlet extends HttpServlet {
 		try {
 			int id = Integer.parseInt(request.getParameter("id"));
 			if (id != 0) {
-				List<Device> devices = deviceModel.getLevelDevicesByID(id, OracleDeviceDAO.GET_NEXT_LEVEL_DEVICE_BY_ID);
+				List<Device> devices = deviceModel.getNextLevelsDeviceByID(id);
 				request.setAttribute("devices", devices);
 				
-				LinkedList<Device> prev_devices = (LinkedList<Device>) deviceModel.getLevelDevicesByID(id, OracleDeviceDAO.GET_PREV_LEVELS_DEVICE_BY_ID);
+				LinkedList<Device> prev_devices = (LinkedList<Device>) deviceModel.getPrevLevelsDeviceByID(id);
 				request.setAttribute("prev_devices", prev_devices);
 				
-				request.setAttribute("prev_device", deviceModel.getDeviceByID(id));
+				request.setAttribute("this_device", deviceModel.getDeviceByID(id));
 				
 				Component component = componentModel.getComponentByID(deviceModel.getDeviceByID(Integer.parseInt(request.getParameter("id"))).getIdComponent());
 				request.setAttribute("component", component);
 			} else {
-				List<Device> devices = deviceModel.getLevelDevicesByID(id, OracleDeviceDAO.GET_FIRST_LEVEL_DEVICES);
+				List<Device> devices = deviceModel.getFirstLevelsDeviceByID(id);
 				request.setAttribute("devices", devices);
 				request.setAttribute("prev_devices", null);
-				request.setAttribute("prev_device", null);
+				request.setAttribute("this_device", null);
 				request.setAttribute("component", null);
 			}
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/show_devices.jsp");
 			dispatcher.forward(request, response);
-		} catch (ShopException e) {
-			Application.sendErrorRedirect(request,response,"/servlet_error.jsp",e.getMessage());
-		} catch (NumberFormatException e) {
-			Application.sendErrorRedirect(request,response,"/servlet_error.jsp",e.getMessage());
+		}  catch (NumberFormatException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Wrong number format.");
+		}  catch (ShopException e){
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Something bad with database.");
 		}
 	}
 }

@@ -17,4 +17,6 @@ public interface ComponentDAO {
 	List<String> getDistinctProducers();
 	
 	void updateComponent(Component component);
+	
+	int getIdLastComponent();
 }

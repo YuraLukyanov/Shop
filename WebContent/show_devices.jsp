@@ -6,10 +6,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Simple Beauty</title>
+<title>Devices</title>
 <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
-<%@ page import="ua.edu.ChaliyLukyanov.laba3.model.*,ua.edu.ChaliyLukyanov.laba3.model.DAO.*,java.util.*"%>
+<%@ page import="ua.edu.ChaliyLukyanov.laba3.model.*,ua.edu.ChaliyLukyanov.laba3.model.DAO.*,java.util.List"%>
 <%@ page errorPage="error.jsp" %>	
 
 <body>
@@ -20,53 +20,35 @@
 		<div id="main_content">
 
 			<div class="content">
-			
-				<%
-					LinkedList<Device> devices = (LinkedList<Device>) request.getAttribute("devices");
-					LinkedList<Device> prev_devices = (LinkedList<Device>) request.getAttribute("prev_devices");
-					Device prev_device = ((Device) request.getAttribute("prev_device"));
-					
-					if (devices != null) {
-						if (prev_devices != null && prev_device != null) {
-				%>
-							<br/><a href="shownextleveldevices?id=0">Devices</a>
-				<%
-							Iterator<Device> iter = prev_devices.descendingIterator();
-							while (iter.hasNext()) {
-								Device device = iter.next();
-				%>
-								 <a href="shownextleveldevices?id=<%=device.getId() %>"><%=device.getTitle() %></a>
-				<% 
-							}
-				%>
-							<%=prev_device.getTitle() %>
-							<h2 align = "center"><%=prev_device.getTitle() %> </h2>
-				<%
-						} else {
-				%>
-							<br/> Devices
-							<h2 align = "center">Devices:</h2>
-				<% 
-						}
-						Component component = (Component) request.getAttribute("component");
-						if (component != null) {
-				%>
-						<ul>
-							<li><b>Title: </b><%=component.getTitle() %></li>
-							<li><b>Description: </b><%=component.getDescription() %></li>
-							<li><b>Producer: </b><%=component.getProducer() %></li>
-							<li><b>Price: </b><%=component.getPrice() %></li>
-						</ul>
-						<h3 align = "center">Includes:</h3>
-				<%
-						}
-						for (Device dev : devices) {
-				%>
-							<a href="shownextleveldevices?id=<%=dev.getId() %>"><%=dev.getTitle() %></a> <br/>
-				<% 
-						}
-					}
-				%>
+				<c:choose>
+					<c:when test="${prev_devices != null && this_device != null }">
+						<br/><a href="shownextleveldevices?id=0">Devices > </a>
+						<c:forEach items="${prev_devices}" var="dev">
+							<a href="shownextleveldevices?id=${dev.id}">${dev.title} > </a>
+						</c:forEach>
+						${this_device.title}
+						<h2 align="center">${this_device.title}</h2>
+						<c:if test="${component != null }">
+							<ul>
+								<li><b>Title: </b>${component.title}</li>
+								<li><b>Description: </b>${component.description}</li>
+								<li><b>Producer: </b>${component.producer}</li>
+								<li><b>Price: </b>${component.price}</li>
+							</ul>
+						</c:if>
+						<c:if test="${!empty devices}">
+							<h3 align="center">Include:</h3>
+						</c:if>
+					</c:when>
+					<c:otherwise>
+						<br/> Devices
+						<h2 align="center">Devices:</h2>
+					</c:otherwise>
+				</c:choose>
+				<c:forEach items="${devices}" var="dev" >
+					<a href="shownextleveldevices?id=${dev.id}">${dev.title}</a> <br/>
+				</c:forEach>
+
 			</div>
 
 			<%@ include file="menu.jsp"%>

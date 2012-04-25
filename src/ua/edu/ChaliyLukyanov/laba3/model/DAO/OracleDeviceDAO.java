@@ -13,6 +13,20 @@ import ua.edu.ChaliyLukyanov.laba3.model.ShopException;
 
 public class OracleDeviceDAO implements DeviceDAO {
 
+	private static final String CANT_CLOSE_CONNECTION = "Can't close connection";
+
+	private static final String CANT_CLOSE_STATEMENT = "Can't close statement";
+
+	public static final String LEVEL = "level";
+
+	public static final String TITLE = "title";
+
+	public static final String ID_PREV = "id_prev";
+
+	public static final String ID_COMPONENT = "id_component";
+
+	public static final String ID_DEVICE = "id_device";
+
 	public static final String GET_ALL_DEVICES = "select level, id_device, id_component, id_prev, title from device start with id_prev is null connect by prior id_device=id_prev";
 
 	public static final String GET_DEVICE_BY_ID = "select * from device where id_device = ?";
@@ -26,6 +40,8 @@ public class OracleDeviceDAO implements DeviceDAO {
 	public static final String GET_NEXT_LEVEL_DEVICE_BY_ID = "select level, id_device, id_component, id_prev, title from device where level = 1 start with id_prev = ? connect by prior id_device=id_prev";
 
 	public static final String GET_PREV_LEVELS_DEVICE_BY_ID = "select level, id_device, id_component, id_prev, title from device where level > 1 start with id_device = ? connect by prior id_prev=id_device";
+
+	public static final String GET_ID_LAST_DEVICE = "select dev_sq.currval from dual";
 	
 	@Override
 	public List<Device> getAllDevices() {
@@ -38,11 +54,11 @@ public class OracleDeviceDAO implements DeviceDAO {
 			ResultSet row = st.executeQuery();
 			while (row.next()) {
 				Device dev = new Device();
-				dev.setId(row.getInt("id_device"));
-				dev.setIdComponent(row.getInt("id_component"));
-				dev.setIdPrev(row.getInt("id_prev"));
-				dev.setTitle(row.getString("title"));
-				dev.setLevel(row.getInt("level"));
+				dev.setId(row.getInt(ID_DEVICE));
+				dev.setIdComponent(row.getInt(ID_COMPONENT));
+				dev.setIdPrev(row.getInt(ID_PREV));
+				dev.setTitle(row.getString(TITLE));
+				dev.setLevel(row.getInt(LEVEL));
 				devices.add(dev);
 			}
 			return devices;
@@ -54,7 +70,7 @@ public class OracleDeviceDAO implements DeviceDAO {
 					st.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close statement", e);
+				throw new ShopException(CANT_CLOSE_STATEMENT, e);
 			}
 
 			try {
@@ -62,7 +78,7 @@ public class OracleDeviceDAO implements DeviceDAO {
 					conn.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close connection", e);
+				throw new ShopException(CANT_CLOSE_CONNECTION, e);
 			}
 		}
 	}
@@ -78,10 +94,10 @@ public class OracleDeviceDAO implements DeviceDAO {
 			ResultSet row = st.executeQuery();
 			row.next();
 			Device dev = new Device();
-			dev.setId(row.getInt("id_device"));
-			dev.setIdComponent(row.getInt("id_component"));
-			dev.setIdPrev(row.getInt("id_prev"));
-			dev.setTitle(row.getString("title"));
+			dev.setId(row.getInt(ID_DEVICE));
+			dev.setIdComponent(row.getInt(ID_COMPONENT));
+			dev.setIdPrev(row.getInt(ID_PREV));
+			dev.setTitle(row.getString(TITLE));
 			return dev;
 		} catch (SQLException e) {
 			throw new ShopException("Can't show device from database", e);
@@ -91,7 +107,7 @@ public class OracleDeviceDAO implements DeviceDAO {
 					st.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close statement", e);
+				throw new ShopException(CANT_CLOSE_STATEMENT, e);
 			}
 
 			try {
@@ -99,7 +115,7 @@ public class OracleDeviceDAO implements DeviceDAO {
 					conn.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close connection", e);
+				throw new ShopException(CANT_CLOSE_CONNECTION, e);
 			}
 		}
 	}
@@ -128,7 +144,7 @@ public class OracleDeviceDAO implements DeviceDAO {
 					st.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close statement", e);
+				throw new ShopException(CANT_CLOSE_STATEMENT, e);
 			}
 
 			try {
@@ -136,7 +152,7 @@ public class OracleDeviceDAO implements DeviceDAO {
 					conn.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close connection", e);
+				throw new ShopException(CANT_CLOSE_CONNECTION, e);
 			}
 		}
 	}
@@ -158,7 +174,7 @@ public class OracleDeviceDAO implements DeviceDAO {
 					st.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close statement", e);
+				throw new ShopException(CANT_CLOSE_STATEMENT, e);
 			}
 
 			try {
@@ -166,15 +182,27 @@ public class OracleDeviceDAO implements DeviceDAO {
 					conn.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close connection", e);
+				throw new ShopException(CANT_CLOSE_CONNECTION, e);
 			}
 		}
 	}
 	
-	public List<Device> getLevelDevicesByID(int id, String sql) {
+	public List<Device> getPrevLevelsDeviceByID(int id){
+		return getLevelDevices(id, GET_PREV_LEVELS_DEVICE_BY_ID);
+	}
+	
+	public List<Device> getNextLevelsDeviceByID(int id){
+		return getLevelDevices(id, GET_NEXT_LEVEL_DEVICE_BY_ID);
+	}
+	
+	public List<Device> getFirstLevelsDeviceByID(int id){
+		return getLevelDevices(id, GET_FIRST_LEVEL_DEVICES);
+	}	
+	
+	private List<Device> getLevelDevices(int id, String sql) {
 		Connection conn = null;
 		PreparedStatement ps = null;
-		List<Device> devices = new LinkedList<Device>();
+		LinkedList<Device> devices = new LinkedList<Device>();
 		try {
 			conn = OracleDAOFactory.createConnection();
 			ps = conn.prepareStatement(sql);
@@ -184,16 +212,16 @@ public class OracleDeviceDAO implements DeviceDAO {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Device dev = new Device();
-				dev.setId(rs.getInt("id_device"));
-				dev.setIdComponent(rs.getInt("id_component"));
-				dev.setIdPrev(rs.getInt("id_prev"));
-				dev.setTitle(rs.getString("title"));
+				dev.setId(rs.getInt(ID_DEVICE));
+				dev.setIdComponent(rs.getInt(ID_COMPONENT));
+				dev.setIdPrev(rs.getInt(ID_PREV));
+				dev.setTitle(rs.getString(TITLE));
 				if (id != 0) {
-					dev.setLevel(rs.getInt("level"));
+					dev.setLevel(rs.getInt(LEVEL));
 				}
-				devices.add(dev);
+				devices.addFirst(dev);
 			}
-			return devices;
+			return (List<Device>) devices;
 		} catch (SQLException e) {
 			throw new ShopException("Can't show device from database", e);
 		}
@@ -203,7 +231,7 @@ public class OracleDeviceDAO implements DeviceDAO {
 					ps.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close statement", e);
+				throw new ShopException(CANT_CLOSE_STATEMENT, e);
 			}
 
 			try {
@@ -211,7 +239,41 @@ public class OracleDeviceDAO implements DeviceDAO {
 					conn.close();
 				}
 			} catch (SQLException e) {
-				throw new ShopException("Can't close connection", e);
+				throw new ShopException(CANT_CLOSE_CONNECTION, e);
+			}
+		}
+	}
+	
+	public int getIdLastDevice() {
+		Connection conn = null;
+		PreparedStatement st = null;
+		int id = 0;
+		try {
+			conn = OracleDAOFactory.createConnection();
+			st = conn.prepareStatement(GET_ID_LAST_DEVICE);
+			ResultSet row = st.executeQuery();
+			if (row.next()) {
+				id = row.getInt(1);
+				System.out.print(id);
+			}
+			return id;
+		} catch (SQLException e) {
+			throw new ShopException("Can't show device from database", e);
+		} finally {
+			try {
+				if (st != null) {
+					st.close();
+				}
+			} catch (SQLException e) {
+				throw new ShopException(CANT_CLOSE_STATEMENT, e);
+			}
+
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				throw new ShopException(CANT_CLOSE_CONNECTION, e);
 			}
 		}
 	}

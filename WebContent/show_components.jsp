@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Simple Beauty</title>
+<title>Components</title>
 <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <%@ page import="ua.edu.ChaliyLukyanov.laba3.model.*,ua.edu.ChaliyLukyanov.laba3.model.DAO.*,java.util.List"%>
@@ -35,7 +35,7 @@
 						<tbody>
 							<c:forEach items="${components}" var="component">
 								<tr>
-									<td><a href="show_component.jsp?id=${component.id}">${component.title}</a></td>
+									<td><a href="showcomponent?id=${component.id}">${component.title}</a></td>
 									<td>${component.producer}</td>
 									<td>${component.weight}</td>
 									<td>${component.price}</td>

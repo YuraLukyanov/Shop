@@ -1,4 +1,4 @@
-package ua.edu.ChaliyLukyanov.laba3.model.servlets;
+package ua.edu.ChaliyLukyanov.laba3.controller.servlets;
 
 import java.io.IOException;
 

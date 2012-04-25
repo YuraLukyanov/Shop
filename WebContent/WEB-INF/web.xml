@@ -21,7 +21,7 @@
     <description></description>
     <display-name>ShowDevicesServlet</display-name>
     <servlet-name>ShowDevicesServlet</servlet-name>
-    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.servlets.ShowDevicesServlet</servlet-class>
+    <servlet-class>ua.edu.ChaliyLukyanov.laba3.controller.servlets.ShowDevicesServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ShowDevicesServlet</servlet-name>
@@ -31,7 +31,7 @@
     <description></description>
     <display-name>AddComponentServlet</display-name>
     <servlet-name>AddComponentServlet</servlet-name>
-    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.servlets.AddComponentServlet</servlet-class>
+    <servlet-class>ua.edu.ChaliyLukyanov.laba3.controller.servlets.AddComponentServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AddComponentServlet</servlet-name>
@@ -41,7 +41,7 @@
     <description></description>
     <display-name>ShowComponentsServlet</display-name>
     <servlet-name>ShowComponentsServlet</servlet-name>
-    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.servlets.ShowComponentsServlet</servlet-class>
+    <servlet-class>ua.edu.ChaliyLukyanov.laba3.controller.servlets.ShowComponentsServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ShowComponentsServlet</servlet-name>
@@ -49,19 +49,9 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>ShowComponentServlet</display-name>
-    <servlet-name>ShowComponentServlet</servlet-name>
-    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.servlets.ShowComponentServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ShowComponentServlet</servlet-name>
-    <url-pattern>/showcomponent</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
     <display-name>RemoveComponentServlet</display-name>
     <servlet-name>RemoveComponentServlet</servlet-name>
-    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.servlets.RemoveComponentServlet</servlet-class>
+    <servlet-class>ua.edu.ChaliyLukyanov.laba3.controller.servlets.RemoveComponentServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>RemoveComponentServlet</servlet-name>
@@ -71,7 +61,7 @@
     <description></description>
     <display-name>AddDeviceServlet</display-name>
     <servlet-name>AddDeviceServlet</servlet-name>
-    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.servlets.AddDeviceServlet</servlet-class>
+    <servlet-class>ua.edu.ChaliyLukyanov.laba3.controller.servlets.AddDeviceServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AddDeviceServlet</servlet-name>
@@ -81,7 +71,7 @@
     <description></description>
     <display-name>RemoveDeviceServlet</display-name>
     <servlet-name>RemoveDeviceServlet</servlet-name>
-    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.servlets.RemoveDeviceServlet</servlet-class>
+    <servlet-class>ua.edu.ChaliyLukyanov.laba3.controller.servlets.RemoveDeviceServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>RemoveDeviceServlet</servlet-name>
@@ -91,7 +81,7 @@
     <description></description>
     <display-name>ShowNextLevelDevicesServlet</display-name>
     <servlet-name>ShowNextLevelDevicesServlet</servlet-name>
-    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.servlets.ShowNextLevelDevicesServlet</servlet-class>
+    <servlet-class>ua.edu.ChaliyLukyanov.laba3.controller.servlets.ShowNextLevelDevicesServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ShowNextLevelDevicesServlet</servlet-name>
@@ -101,7 +91,7 @@
     <description></description>
     <display-name>FilterComponentsServlet</display-name>
     <servlet-name>FilterComponentsServlet</servlet-name>
-    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.servlets.FilterComponentsServlet</servlet-class>
+    <servlet-class>ua.edu.ChaliyLukyanov.laba3.controller.servlets.FilterComponentsServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>FilterComponentsServlet</servlet-name>
@@ -111,10 +101,28 @@
     <description></description>
     <display-name>EditComponentServlet</display-name>
     <servlet-name>EditComponentServlet</servlet-name>
-    <servlet-class>ua.edu.ChaliyLukyanov.laba3.model.servlets.EditComponentServlet</servlet-class>
+    <servlet-class>ua.edu.ChaliyLukyanov.laba3.controller.servlets.EditComponentServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>EditComponentServlet</servlet-name>
     <url-pattern>/editcomponent</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ShowComponentServlet</display-name>
+    <servlet-name>ShowComponentServlet</servlet-name>
+    <servlet-class>ua.edu.ChaliyLukyanov.laba3.controller.servlets.ShowComponentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShowComponentServlet</servlet-name>
+    <url-pattern>/showcomponent</url-pattern>
+  </servlet-mapping>
+  <error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+      <location>/error.jsp</location>
+  </error-page>
+  <context-param>
+  	<param-name>application</param-name>
+  	<param-value>/WEB-INF/classes/log4j.properties</param-value>
+  </context-param>
 </web-app>

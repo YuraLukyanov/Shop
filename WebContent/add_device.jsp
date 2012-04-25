@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Add device</title>
 <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <%@ page import="ua.edu.ChaliyLukyanov.laba3.model.*,ua.edu.ChaliyLukyanov.laba3.model.DAO.*,java.util.List"%>
@@ -18,53 +19,23 @@
 					<br/>
 					<b>Component: </b>
 					<select name="id_component">
-						<%
-						ComponentDAO components = (ComponentDAO) request.getAttribute(Application.COMPONENT_DAO);
-						List<Component> list_components = components.getAllComponents();
-						
-						if (list_components != null) {
-							for (Component comp : list_components) {
-						%>
-						<option value="<%=comp.getId() %>"><%=comp.getTitle() %></option>
-						<%
-							}
-						}
-						%>
+						<c:forEach items="${shop_components.allComponents}" var="comp">
+							<option value="${comp.id}" ${comp.id == param.component ? 'selected' : ''}>${comp.title}</option>
+						</c:forEach>	
 					</select> <br/><br/>
 					<b>Previous device: </b>
 					<select name="id_prev_device">
 						<option value="-1"> </option>
-						<%
-						DeviceDAO devices = (DeviceDAO) request.getAttribute(Application.DEVICE_DAO);
-						List<Device> list_devices = devices.getAllDevices();
-						
-						if (list_devices != null) {
-							for (Device device : list_devices) {
-						%>
-						<option value="<%=device.getId() %>"><%=device.getTitle() %></option>
-						<%
-							}
-						}
-						%>
+						<c:forEach items="${shop_devices.allDevices}" var="dev">
+							<option value="${dev.id}" ${dev.id == param.prev ? 'selected' : ''}>${dev.title}</option>
+						</c:forEach>
 					</select><br/><br/>
 					<b>Title: </b><input type="text" name="title"/><br/>
 					<p align="center"><button type="submit">Add</button></p>
 				</form>
-				<%
-					if (request.getParameter("error") != null) {
-				%>
-				<br />
-				<br />
-				<h2><%=request.getParameter("error")%></h2>
-				<%
-					} else if (request.getParameter("ok") != null) {
-				%>
-				<br />
-				<br />
-				<h2>Successful!</h2>
-				<%
-					}
-				%>
+				<c:if test="${!empty param.error }">
+					<h2>${param.error}</h2>
+				</c:if>
 			</div>
 
 			<%@ include file="menu.jsp"%>
