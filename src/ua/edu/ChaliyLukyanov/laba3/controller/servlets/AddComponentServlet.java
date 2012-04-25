@@ -11,13 +11,15 @@ import org.apache.log4j.Logger;
 
 import ua.edu.ChaliyLukyanov.laba3.model.Application;
 import ua.edu.ChaliyLukyanov.laba3.model.Component;
+import ua.edu.ChaliyLukyanov.laba3.model.NoSuchComponentException;
+import ua.edu.ChaliyLukyanov.laba3.model.NoSuchDeviceException;
 import ua.edu.ChaliyLukyanov.laba3.model.ShopException;
 import ua.edu.ChaliyLukyanov.laba3.model.DAO.ComponentDAO;
 
 public class AddComponentServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private static Logger logger=Logger.getLogger(AddComponentServlet.class);
+	private static Logger logger=Logger.getLogger("Shoplogger");
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -34,21 +36,20 @@ public class AddComponentServlet extends HttpServlet {
 			
 			double pr = 0.0;
 			double w = 0.0;
-			
-//			if (!"".equals(price))
+			if (!"".equals(price))
 				pr = Double.parseDouble(price);
 
-//			if (!"".equals(weight))
+			if (!"".equals(weight))
 				w = Double.parseDouble(weight);
 			
 			if ("".equals(title))
 				throw new IllegalArgumentException("Title should be!");
 
-/*			if ("".equals(desc))
+			if ("".equals(desc))
 				throw new IllegalArgumentException("Description should be!");
 			
 			if ("".equals(producer))
-				throw new IllegalArgumentException("Producer should be!");*/
+				throw new IllegalArgumentException("Producer should be!");
 
 			if (pr < 0 || w < 0) {
 				throw new NumberFormatException("Price and weight should be > 0");
@@ -56,6 +57,7 @@ public class AddComponentServlet extends HttpServlet {
 
 			model.addComponent(new Component(0, title, desc, producer, w, img,	pr));
 			int id = model.getIdLastComponent();
+			logger.info("Component adds");
 			response.sendRedirect(request.getContextPath() + "/showcomponent?id=" + id);
 		} catch (ShopException e) {
 			logger.error(e);
@@ -75,8 +77,10 @@ public class AddComponentServlet extends HttpServlet {
 					+ "/add_component.jsp?title=" + title + "&desc=" + desc
 					+ "&prod=" + producer + "&img=" + img + "&pr=" + price
 					+ "&w=" + weight + "&error=" + e.getMessage());
-		}
-
+		} catch (NoSuchComponentException e){
+			logger.error(e);
+			throw new NoSuchDeviceException(e.getMessage());
+		} 
 	}
 
 }

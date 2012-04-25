@@ -8,14 +8,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import ua.edu.ChaliyLukyanov.laba3.model.Application;
+import ua.edu.ChaliyLukyanov.laba3.model.Component;
+import ua.edu.ChaliyLukyanov.laba3.model.NoSuchComponentException;
 import ua.edu.ChaliyLukyanov.laba3.model.ShopException;
 import ua.edu.ChaliyLukyanov.laba3.model.DAO.ComponentDAO;
-import ua.edu.ChaliyLukyanov.laba3.model.Component;
 
 
 public class EditComponentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static Logger logger=Logger.getLogger("Shoplogger");
       
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -27,8 +31,11 @@ public class EditComponentServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/edit_component.jsp");
 			dispatcher.forward(request, response);			
 		} catch (ShopException e) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			e.printStackTrace();			
+			logger.error(e);
+			throw new ShopException(e.getMessage());
+		} catch (NoSuchComponentException e){
+			logger.error(e);
+			throw new NoSuchComponentException(e.getMessage());
 		}
 	}
     
@@ -41,10 +48,11 @@ public class EditComponentServlet extends HttpServlet {
 			Double price = Double.valueOf(request.getParameter("price"));
 			int id = Integer.valueOf(request.getParameter("id_component"));
 			model.updateComponent(new Component(id, title, description, producer, 0, null, price));
+			logger.info("Component " + id + " updates");
 			response.sendRedirect(request.getContextPath() + "/showcomponent?id=" + id);
 		} catch (ShopException e) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			e.printStackTrace();
+			logger.error(e);
+			throw new ShopException(e.getMessage());
 		}
 	}
 

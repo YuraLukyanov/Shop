@@ -7,14 +7,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ua.edu.ChaliyLukyanov.laba3.model.ShopException;
 import ua.edu.ChaliyLukyanov.laba3.model.Component;
+import ua.edu.ChaliyLukyanov.laba3.model.NoSuchComponentException;
+import ua.edu.ChaliyLukyanov.laba3.model.ShopException;
 
 public class OracleComponentDAO implements ComponentDAO {
 
 	private static final String CANT_CLOSE_CONNECTION = "Can't close connection";
 
 	private static final String CANT_CLOSE_STATEMENT = "Can't close statement";
+	
+	private static final String CANT_CLOSE_RESULT_SET = "Cant' close result set";
 
 	public static final String PRICE = "price";
 
@@ -49,18 +52,30 @@ public class OracleComponentDAO implements ComponentDAO {
 	public int getIdLastComponent() {
 		Connection conn = null;
 		PreparedStatement st = null;
+		ResultSet row = null;
 		int id = 0;
 		try {
 			conn = OracleDAOFactory.createConnection();
 			st = conn.prepareStatement(GET_ID_LAST_COMPONENT);
-			ResultSet row = st.executeQuery();
+			row = st.executeQuery();
 			if (row.next()) {
 				id = row.getInt(1);
+			}else{
+				throw new NoSuchComponentException("Can't get last component ID");
 			}
 			return id;
 		} catch (SQLException e) {
 			throw new ShopException("Can't get components from database", e);
 		} finally {
+			
+			try {
+				if (row != null) {
+					row.close();
+				}
+			} catch (SQLException e) {
+				throw new ShopException(CANT_CLOSE_RESULT_SET, e);
+			}
+			
 			try {
 				if (st != null) {
 					st.close();
@@ -84,11 +99,12 @@ public class OracleComponentDAO implements ComponentDAO {
 	public List<Component> getAllComponents() {
 		Connection conn = null;
 		PreparedStatement st = null;
+		ResultSet row = null;
 		List<Component> res = new ArrayList<Component>();
 		try {
 			conn = OracleDAOFactory.createConnection();
 			st = conn.prepareStatement(GET_ALL_COMPONENTS);
-			ResultSet row = st.executeQuery();
+			row = st.executeQuery();
 			while (row.next()) {
 				Component comp = new Component();
 				comp.setId(row.getInt(ID_COMPONENT));
@@ -104,6 +120,15 @@ public class OracleComponentDAO implements ComponentDAO {
 		} catch (SQLException e) {
 			throw new ShopException("Can't get components from database", e);
 		} finally {
+			
+			try {
+				if (row != null) {
+					row.close();
+				}
+			} catch (SQLException e) {
+				throw new ShopException(CANT_CLOSE_RESULT_SET, e);
+			}
+			
 			try {
 				if (st != null) {
 					st.close();
@@ -128,24 +153,33 @@ public class OracleComponentDAO implements ComponentDAO {
 		Connection conn = null;
 		PreparedStatement st = null;
 		Component component = null;
-
+		ResultSet row = null;
 		try {
 			conn = OracleDAOFactory.createConnection();
 			st = conn.prepareStatement(GET_COMPONENT_BY_ID);
 			st.setInt(1,id);
-			ResultSet row = st.executeQuery();
+			row = st.executeQuery();
 			if (row.next()) {
 				component = new Component(id, row.getString(TITLE),
 						row.getString(DESCRIPTION),
 						row.getString(PRODUCER), row.getDouble(WEIGHT),
 						row.getString(IMG), row.getDouble(PRICE));
-
+			}else{
+				throw new NoSuchComponentException("Can't get component from database.");
 			}
 			return component;
 
 		} catch (SQLException e) {
 			throw new ShopException("Can't get component from database", e);
 		} finally {
+			
+			try {
+				if (row != null) {
+					row.close();
+				}
+			} catch (SQLException e) {
+				throw new ShopException(CANT_CLOSE_RESULT_SET, e);
+			}
 			try {
 				if (st != null) {
 					st.close();

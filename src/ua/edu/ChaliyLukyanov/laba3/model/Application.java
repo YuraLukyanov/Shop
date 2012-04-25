@@ -12,8 +12,6 @@ import javax.servlet.ServletRequestListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.PropertyConfigurator;
-
 import ua.edu.ChaliyLukyanov.laba3.model.DAO.ComponentDAO;
 import ua.edu.ChaliyLukyanov.laba3.model.DAO.DAOFactory;
 import ua.edu.ChaliyLukyanov.laba3.model.DAO.DeviceDAO;
@@ -44,24 +42,11 @@ public class Application implements ServletRequestListener, ServletContextListen
 		dispatcher.forward(request, response);
 	}
 	
-	public void contextInitialized(ServletContextEvent e) 
-	 { 
-	     ServletContext ctx = e.getServletContext();
-	    
-	  String prefix =  ctx.getRealPath("/");     
-	  String file = "WEB-INF"+System.getProperty("file.separator")+"classes"+System.getProperty("file.separator")+"log4j.properties";
-	           
-	     if(file != null) {
-	       PropertyConfigurator.configure(prefix+file);
-	       System.out.println("Log4J Logging started for application: " + prefix+file);
-	     }
-	     else
-	     {
-	      System.out.println("Log4J Is not configured for application Application: " + prefix+file);
-	     } 
-	        
-	      
-	 }
+	public void contextInitialized(ServletContextEvent event) {
+        ServletContext context = event.getServletContext();
+        System.out.println(context.getRealPath("/"));
+        System.setProperty("rootPath", context.getRealPath("/"));
+}
 	 
 	 public void contextDestroyed(ServletContextEvent event) 
 	 {
